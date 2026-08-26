@@ -1,0 +1,22 @@
+# Copy this file's contents into a new file at: .github/workflows/push.yml
+# (In GitHub: Add file > Create new file > type ".github/workflows/push.yml" as the name.)
+name: Daily reminders
+
+on:
+  schedule:
+    - cron: "45 5 * * *"    # 07:45 Barcelona (summer) - morning reminder
+    - cron: "30 18 * * *"   # 20:30 Barcelona (summer) - evening reminder
+  workflow_dispatch: {}      # lets you send a test push from the Actions tab
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install web-push --no-save
+      - run: node send-push.js
+        env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}

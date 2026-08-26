@@ -1,0 +1,6 @@
+VAPID private key for the push notifications.
+
+Add this as the GitHub Actions secret named VAPID_PRIVATE_KEY (see README step 2),
+then delete this file. NEVER upload this file to the repository.
+
+KuqJhfUMlH81zDoXP5kccEvMbQqiVAwH8BmoAZN92Ho
