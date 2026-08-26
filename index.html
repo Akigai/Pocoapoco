@@ -171,6 +171,12 @@
   .chip.addw{cursor:pointer;border:1.5px dashed var(--cobalt);background:transparent}
   .ecoline{font-family:"Gabarito",sans-serif;font-weight:700;font-size:1.12rem;line-height:1.5;background:var(--card2);border-radius:12px;padding:14px;margin:10px 0}
   .ideaitem{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:6px 0;font:inherit;font-size:.9rem;color:var(--ink);cursor:pointer}
+  #charlalog{display:flex;flex-direction:column;gap:8px;margin:12px 0;min-height:100px}
+  .msg{max-width:86%;padding:9px 13px;border-radius:15px;font-size:.95rem;white-space:pre-wrap;line-height:1.5}
+  .msg.u{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:5px}
+  .msg.a{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .matchtoggle{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px dashed var(--line);color:var(--muted);border-radius:999px;padding:6px 14px;font-family:"Gabarito",sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;margin:4px 0 2px}
+  .matchtoggle.on{background:var(--accent-soft);border:1.5px solid var(--accent);color:var(--accent)}
   .note{
     background:var(--cobalt-soft);color:var(--cobalt);
     border-radius:14px;padding:12px 14px;font-size:.9rem;font-weight:600;margin:12px 0;
@@ -224,7 +230,7 @@
     background:var(--card);border-top:1px solid var(--line);
     padding:6px 8px calc(6px + env(safe-area-inset-bottom));
   }
-  nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+  nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
   .tab{
     background:none;border:none;cursor:pointer;color:var(--muted);
     display:flex;flex-direction:column;align-items:center;gap:3px;
@@ -290,7 +296,7 @@
     <div class="brand">Poco a poco <small>español, un día a la vez</small></div>
     <div class="dateline">
       <span id="fecha"></span>
-      <span class="streak" id="streak" title="Días seguidos">&#128293; <span id="streakN">0</span></span>
+      <span class="streak" id="streak" title="Días seguidos">&#128293; <span id="streakN">0</span><span id="frz"></span></span>
     </div>
     <div class="progressbar" id="pbar"><b id="pfill"></b></div>
     <div class="progresslabel" id="plabel"></div>
@@ -301,6 +307,7 @@
     <!-- HOY -->
     <section class="panel active" id="panel-hoy">
       <div class="note" id="streakNote" style="display:none;background:var(--accent-soft);color:var(--accent)"></div>
+      <button class="matchtoggle" id="matchbtn">&#9917; ¿Partido hoy?</button>
       <div class="note sunday" id="sundayNote" style="display:none">
         Domingo: light day. Review your words (Palabras tab), watch an episode, then tap "Generar repaso" in the Plan tab for Claude's report on your week. No pressure.
       </div>
@@ -348,7 +355,8 @@
             <button class="btn" id="w-add">Añadir</button>
           </div>
           <div class="chips" id="todaywords"></div>
-          <div class="row" style="margin-top:12px"><button class="btn ghost" id="suggbtn">Sugerencias de hoy</button></div>
+          <div class="row" style="margin-top:12px"><button class="btn ghost" id="suggbtn">Sugerencias de hoy</button><button class="btn ghost" id="fotobtn">La foto de hoy</button></div>
+          <input type="file" id="fotoin" accept="image/*" capture="environment" style="display:none">
           <div class="chips" id="suggchips"></div>
           <p class="hint">Grab words from whatever you watch or read today. Tap a word in Sugerencias to add it.</p>
         </div>
@@ -407,6 +415,7 @@
             <div class="ecoline" id="ecoline" lang="es"></div>
             <div class="row"><button class="btn" id="ecoplay">Escuchar</button><button class="btn secondary" id="ecoslow">Lento</button><button class="btn ghost" id="econext">Siguiente</button></div>
             <p class="hint" id="ecocount"></p>
+            <p class="hint">Voice sounding robotic? On iPhone: Settings → Accessibility → Spoken Content → Voices → Spanish → download <b>Mónica (Enhanced)</b>. The app will use it automatically.</p>
           </div>
         </div>
       </div>
@@ -458,6 +467,15 @@
       <p class="savestate" id="savestate"></p>
     </section>
 
+    <!-- CHARLA -->
+    <section class="panel" id="panel-charla">
+      <p class="hint" style="margin-top:6px">Text chat in easy Spanish, perfect for the metro. Claude corrects gently in brackets and keeps the conversation going. A fresh chat every day.</p>
+      <div id="charlalog"></div>
+      <p class="hint" id="charlastatus" style="min-height:1em;margin:0"></p>
+      <div class="row"><input type="text" id="charla-in" lang="es" placeholder="Escribe en español..." autocomplete="off" style="flex:1"><button class="btn" id="charla-send">Enviar</button></div>
+      <div class="row"><button class="btn ghost" id="charla-new">Nueva charla</button></div>
+    </section>
+
     <!-- DIARIO -->
     <section class="panel" id="panel-diario">
       <div id="diariolist"></div>
@@ -506,6 +524,16 @@
         <div class="track" id="plantrack"></div>
         <div id="roadmap"></div>
 
+        <h2>La misión de la semana</h2>
+        <p>One real conversation in the wild each week. Claude gives you a concrete mission with the exact phrases; afterwards, tell it how it went and get a debrief.</p>
+        <div class="row"><button class="btn" id="missionbtn">Dame la misión</button></div>
+        <div class="fixbox" id="missionbox" style="display:none"></div>
+        <div id="missiondebrief" style="display:none;margin-top:10px">
+          <textarea id="mission-report" placeholder="How did it go? What did you say, what did they say back?"></textarea>
+          <div class="row"><button class="btn secondary" id="debriefbtn">Debrief</button></div>
+          <div class="fixbox" id="debriefbox" style="display:none"></div>
+        </div>
+
         <h2>El Repaso · the weekly round-up</h2>
         <p>On Sunday (or whenever): Claude reads your week's journals, corrections and words and gives you a report: what improved, the stubborn mistakes, a mini-quiz, and an honest verdict: move on or repeat.</p>
         <div class="row"><button class="btn" id="repasobtn">Generar repaso de la semana</button></div>
@@ -518,6 +546,12 @@
           <div class="progressbar" style="height:10px"><b id="b1fill" style="background:var(--good)"></b></div>
           <div class="fixbox" id="b1text" style="margin-top:8px"></div>
         </div>
+        <h2>Copia de seguridad</h2>
+        <p>Your journal, words and progress live on this phone only. Download a backup once a week; restore it if you ever switch phones or clear Safari data.</p>
+        <div class="row"><button class="btn secondary" id="backupbtn">Descargar copia</button><button class="btn ghost" id="restorebtn">Restaurar</button></div>
+        <p class="hint" id="backupinfo"></p>
+        <input type="file" id="restorefile" accept=".json,application/json" style="display:none">
+
         <h2>Menú de inmersión</h2>
         <p>Choose for pleasure, not duty. If it bores you, change it.</p>
         <div class="menu">
@@ -550,11 +584,14 @@
       <div class="es" id="quiz-es"></div>
       <div class="en" id="quiz-en"></div>
     </div>
-    <div class="row" style="justify-content:center;margin-top:16px">
-      <button class="btn secondary" id="quiznext">Siguiente</button>
+    <div class="row" id="quizanswers" style="justify-content:center;margin-top:16px;display:none">
+      <button class="btn" id="quizyes" style="background:var(--good)">La sabía</button>
+      <button class="btn secondary" id="quizno">Aún no</button>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:12px">
       <button class="btn ghost" id="quizclose">Cerrar</button>
     </div>
-    <p class="hint" style="text-align:center">Tap the card to see the meaning.</p>
+    <p class="hint" style="text-align:center">Tap the card to see the meaning, then be honest: did you know it?</p>
   </div>
 </div>
 
@@ -563,6 +600,10 @@
     <button class="tab active" data-tab="hoy">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
       Hoy
+    </button>
+    <button class="tab" data-tab="charla">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h8M8 14h5"/><path d="M21 12a8 8 0 1 1-3.1-6.3L21 5l-.9 3.4A8 8 0 0 1 21 12z" transform="rotate(0)"/></svg>
+      Charla
     </button>
     <button class="tab" data-tab="diario">
       <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17h16"/><path d="M9 8h6"/></svg>
@@ -652,6 +693,7 @@
   var CHECKS = ["am","words","talk","watch","echo","pm"];
   function isDayActive(k){
     var d = state.days[k];
+    if(d && d.frozen) return true;
     var any = d && (CHECKS.some(function(c){ return d.checks && d.checks[c]; }) || (d.am && d.am.trim()) || (d.pm && d.pm.trim()));
     return !!(any || wordsOn(k).length);
   }
@@ -682,7 +724,17 @@
   function renderHeader(){
     var f = new Intl.DateTimeFormat("es-ES", {weekday:"long", day:"numeric", month:"long"}).format(new Date());
     document.getElementById("fecha").textContent = cap(f);
-    document.getElementById("streakN").textContent = streak();
+    var s = streak();
+    document.getElementById("streakN").textContent = s;
+    var ms = state.maxStreak || 0;
+    if(s > ms){
+      if(Math.floor(s / 7) > Math.floor(ms / 7)){
+        state.freezes = Math.min(3, (state.freezes || 0) + 1);
+      }
+      state.maxStreak = s;
+      try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){}
+    }
+    document.getElementById("frz").textContent = (state.freezes ? " · ❄" + state.freezes : "");
     var n = doneCount();
     document.getElementById("pfill").style.width = (n/6*100) + "%";
     var labels = ["Un día nuevo. Empieza por cualquiera.","1 de 6. Ya está en marcha.","2 de 6. Poco a poco.","3 de 6. La mitad.","4 de 6. Más de la mitad.","5 de 6. Casi.","6 de 6. Día completo. Olé."];
@@ -814,7 +866,7 @@
   }
 
   // ---- shared Claude plumbing ----
-  function claudeReq(system, user, maxTok){
+  function claudeMsgs(system, msgs, maxTok){
     var key = getClaudeKey();
     if(!key) return Promise.reject({nokey:true});
     return fetch("https://api.anthropic.com/v1/messages", {
@@ -829,7 +881,7 @@
         model: "claude-haiku-4-5",
         max_tokens: maxTok || 1000,
         system: system,
-        messages: [{ role: "user", content: user }]
+        messages: msgs
       })
     }).then(function(res){
       return res.json().then(function(data){ return { ok: res.ok, status: res.status, data: data }; });
@@ -837,6 +889,9 @@
       if(!r.ok) throw { status: r.status };
       return (r.data.content || []).map(function(c){ return c.text || ""; }).join("\n").trim();
     });
+  }
+  function claudeReq(system, user, maxTok){
+    return claudeMsgs(system, [{ role: "user", content: user }], maxTok);
   }
   function claudeJSONReq(system, user, maxTok){
     return claudeReq(system, user, maxTok).then(function(txt){
@@ -882,7 +937,10 @@
     return "Semana " + cur + " (" + w.name + "): " + w.chips.join(", ");
   }
   var THEMES = ["repaso tranquilo del domingo", "Barça y fútbol", "comida, el mercado y las bravas", "F1 y tenis", "tu barrio y la ciudad de Barcelona", "compras y moda", "viajes y planes"];
-  function todayTheme(){ return THEMES[new Date().getDay()]; }
+  function todayTheme(){
+    if(day().match) return "BARÇA MATCHDAY: today's match, the lineup, predictions or the result, how it felt";
+    return THEMES[new Date().getDay()];
+  }
   function allEntryText(){
     var t = "";
     Object.keys(state.days).forEach(function(k){
@@ -1054,6 +1112,8 @@
   // ---------- palabras ----------
   function renderPalabras(){
     document.getElementById("totalwords").textContent = state.words.length;
+    var due = state.words.length ? dueWords().length : 0;
+    document.getElementById("startquiz").textContent = due ? "Repasar (" + due + ")" : "Repasar";
     var box = document.getElementById("wordgroups");
     box.innerHTML = "";
     if(!state.words.length){
@@ -1084,40 +1144,66 @@
     });
   }
 
-  // ---------- quiz ----------
+  // ---------- quiz (spaced repetition) ----------
+  var SR_INTERVALS = [1, 3, 7, 21, 45];
+  function keyPlus(n){
+    var d = new Date(); d.setDate(d.getDate() + n);
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+  }
+  function dueWords(){
+    var t = todayKey();
+    return state.words.filter(function(w){ return !w.sr || w.sr.due <= t; });
+  }
   var quizOrder = [], quizIdx = 0, revealed = false;
+  function shuffle(a){
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
   function startQuiz(){
     if(!state.words.length) return;
-    quizOrder = state.words.slice();
-    for(var i = quizOrder.length - 1; i > 0; i--){
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = quizOrder[i]; quizOrder[i] = quizOrder[j]; quizOrder[j] = tmp;
-    }
-    quizOrder = quizOrder.slice(0, 20);
+    var due = shuffle(dueWords()).slice(0, 20);
+    quizOrder = due.length ? due : shuffle(state.words.slice()).slice(0, 10);
     quizIdx = 0;
     document.getElementById("quiz").classList.add("active");
     showQuizCard();
   }
   function showQuizCard(){
     revealed = false;
+    document.getElementById("quizanswers").style.display = "none";
     var w = quizOrder[quizIdx];
     document.getElementById("quiz-es").textContent = w.es;
     document.getElementById("quiz-en").textContent = "";
     document.getElementById("quizmeta").textContent = (quizIdx + 1) + " / " + quizOrder.length;
+  }
+  function quizAnswer(knew){
+    var w = quizOrder[quizIdx];
+    var i = (w.sr && typeof w.sr.i === "number") ? w.sr.i : -1;
+    i = knew ? Math.min(i + 1, SR_INTERVALS.length - 1) : 0;
+    w.sr = { i: i, due: keyPlus(SR_INTERVALS[i]) };
+    persist();
+    quizIdx++;
+    if(quizIdx >= quizOrder.length){
+      document.getElementById("quiz").classList.remove("active");
+      renderPalabras();
+      return;
+    }
+    showQuizCard();
   }
   document.getElementById("startquiz").addEventListener("click", startQuiz);
   document.getElementById("quizface").addEventListener("click", function(){
     if(revealed) return;
     revealed = true;
     document.getElementById("quiz-en").textContent = quizOrder[quizIdx].en || "(no meaning added)";
+    document.getElementById("quizanswers").style.display = "flex";
   });
-  document.getElementById("quiznext").addEventListener("click", function(){
-    quizIdx++;
-    if(quizIdx >= quizOrder.length){ document.getElementById("quiz").classList.remove("active"); return; }
-    showQuizCard();
-  });
+  document.getElementById("quizyes").addEventListener("click", function(){ quizAnswer(true); });
+  document.getElementById("quizno").addEventListener("click", function(){ quizAnswer(false); });
   document.getElementById("quizclose").addEventListener("click", function(){
     document.getElementById("quiz").classList.remove("active");
+    renderPalabras();
   });
 
   // ---------- tabs ----------
@@ -1403,9 +1489,21 @@
   function pickVoice(){
     if(ecoVoice) return ecoVoice;
     if(!window.speechSynthesis) return null;
-    var vs = speechSynthesis.getVoices() || [];
-    ecoVoice = vs.find(function(v){ return v.lang === "es-ES"; }) ||
-               vs.find(function(v){ return v.lang && v.lang.indexOf("es") === 0; }) || null;
+    var vs = (speechSynthesis.getVoices() || []).filter(function(v){ return v.lang && v.lang.toLowerCase().indexOf("es") === 0; });
+    if(!vs.length) return null;
+    function score(v){
+      var s = 0, n = (v.name || "").toLowerCase();
+      if(n.indexOf("mónica") !== -1 || n.indexOf("monica") !== -1) s += 8;
+      if(n.indexOf("paulina") !== -1) s += 6;
+      if(n.indexOf("enhanced") !== -1 || n.indexOf("premium") !== -1 || n.indexOf("natural") !== -1) s += 5;
+      if(n.indexOf("google") !== -1) s += 3;
+      if(v.lang === "es-ES") s += 3;
+      else if(v.lang.indexOf("es-US") === 0 || v.lang.indexOf("es-MX") === 0) s += 1;
+      if(n.indexOf("espeak") !== -1 || n.indexOf("compact") !== -1) s -= 6;
+      return s;
+    }
+    vs.sort(function(a, b){ return score(b) - score(a); });
+    ecoVoice = vs[0];
     return ecoVoice;
   }
   if(window.speechSynthesis && speechSynthesis.onvoiceschanged !== undefined){
@@ -1505,6 +1603,213 @@
     });
   });
 
+  // ---------- v3: freezes, backup, foto, matchday, charla, mission ----------
+  if(typeof state.freezes !== "number") state.freezes = 0;
+
+  // streak freeze: protect a single missed day if a freeze is available
+  function reconcileFreezes(){
+    var y = keyOffset(1), y2 = keyOffset(2);
+    var dy = state.days[y];
+    if(!isDayActive(y) && isDayActive(y2) && state.freezes > 0 && !(dy && dy.frozen)){
+      day(y).frozen = true;
+      state.freezes--;
+      persist();
+    }
+  }
+
+  // backup + restore
+  function renderBackupInfo(){
+    var el = document.getElementById("backupinfo");
+    el.textContent = state.lastBackup
+      ? "Last backup: " + new Date(state.lastBackup).toLocaleDateString("en-GB")
+      : "No backup yet. Take 10 seconds and do one now.";
+  }
+  document.getElementById("backupbtn").addEventListener("click", function(){
+    state.lastBackup = Date.now();
+    persist();
+    var blob = new Blob([JSON.stringify(state)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "poco-a-poco-backup-" + todayKey() + ".json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    renderBackupInfo();
+  });
+  document.getElementById("restorebtn").addEventListener("click", function(){
+    document.getElementById("restorefile").click();
+  });
+  document.getElementById("restorefile").addEventListener("change", function(e){
+    var f = e.target.files && e.target.files[0];
+    if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try {
+        var data = JSON.parse(r.result);
+        if(!data || typeof data !== "object" || !data.days || !data.words) throw new Error("bad");
+        if(confirm("Replace everything in the app with this backup?")){
+          data.updatedAt = Date.now();
+          localStorage.setItem(LS_KEY, JSON.stringify(data));
+          location.reload();
+        }
+      } catch(err){ alert("That file doesn't look like a Poco a Poco backup."); }
+    };
+    r.readAsText(f);
+  });
+
+  // la foto de hoy (vision)
+  var FOTO_SYS = 'Look at the photo. Pick 5-8 useful everyday Spanish words or short phrases for things clearly visible in it (level A1-B1, the kind of vocabulary someone living in Barcelona actually needs). Skip anything in the exclude list. Reply with JSON only: [{"es":"la palabra","ml":"meaning in simple English"}]';
+  function fileToImagePart(file){
+    return new Promise(function(resolve, reject){
+      var r = new FileReader();
+      r.onerror = reject;
+      r.onload = function(){
+        var img = new Image();
+        img.onerror = reject;
+        img.onload = function(){
+          var max = 1024, w = img.width, h = img.height;
+          var sc = Math.min(1, max / Math.max(w, h));
+          var c = document.createElement("canvas");
+          c.width = Math.round(w * sc); c.height = Math.round(h * sc);
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          var url = c.toDataURL("image/jpeg", 0.8);
+          resolve({ type: "image", source: { type: "base64", media_type: "image/jpeg", data: url.split(",")[1] } });
+        };
+        img.src = r.result;
+      };
+      r.readAsDataURL(file);
+    });
+  }
+  document.getElementById("fotobtn").addEventListener("click", function(){
+    if(!getClaudeKey()){ aiErr(document.getElementById("fotobtn"), {nokey:true}, "La foto de hoy"); return; }
+    document.getElementById("fotoin").click();
+  });
+  document.getElementById("fotoin").addEventListener("change", function(e){
+    var f = e.target.files && e.target.files[0];
+    if(!f) return;
+    var btn = document.getElementById("fotobtn");
+    btn.disabled = true;
+    btn.textContent = "Mirando la foto...";
+    fileToImagePart(f).then(function(imgPart){
+      var user = [imgPart, { type: "text", text: "Exclude: " + state.words.slice(-60).map(function(w){ return w.es; }).join(", ") }];
+      return claudeJSONReq(FOTO_SYS, user, 600);
+    }).then(function(items){
+      btn.disabled = false;
+      btn.textContent = "La foto de hoy";
+      renderSugg(items);
+      document.getElementById("fotoin").value = "";
+    }).catch(function(err){
+      document.getElementById("fotoin").value = "";
+      aiErr(btn, err, "La foto de hoy");
+    });
+  });
+
+  // matchday mode
+  function renderMatch(){
+    var b = document.getElementById("matchbtn");
+    var on = !!day().match;
+    b.classList.toggle("on", on);
+    b.innerHTML = on ? "&#9917; Día de partido" : "&#9917; ¿Partido hoy?";
+  }
+  document.getElementById("matchbtn").addEventListener("click", function(){
+    day().match = !day().match;
+    var t = todayKey();
+    ["ideas", "sugg", "conv", "eco"].forEach(function(k){
+      if(state.cache[k] && state.cache[k].date === t) delete state.cache[k];
+    });
+    document.getElementById("ideasbox").style.display = "none";
+    document.getElementById("suggchips").innerHTML = "";
+    renderMatch();
+    persist();
+  });
+
+  // charla (text chat)
+  var CHARLA_SYS = 'You are a warm Spanish conversation partner for a text chat. Student: A1-A2 aiming for B1, lives in Barcelona, from Kerala, loves Barça (Messi, Pedri), F1, tennis, food (patatas bravas), shopping, travel. Reply in simple, everyday Spanish, 1-3 short sentences, and end with one easy question. If her last message had mistakes, start with a very short correction in brackets like [mejor: "..."] and then continue naturally. Never lecture. Keep it light and fun.';
+  if(!state.charla || state.charla.date !== todayKey()) state.charla = state.charla || null;
+  function charlaMsgs(){
+    if(!state.charla || state.charla.date !== todayKey()) state.charla = { date: todayKey(), msgs: [] };
+    return state.charla.msgs;
+  }
+  function renderCharla(){
+    var log = document.getElementById("charlalog");
+    log.innerHTML = "";
+    charlaMsgs().forEach(function(m){
+      var d = document.createElement("div");
+      d.className = "msg " + (m.r === "u" ? "u" : "a");
+      if(m.r === "a") d.lang = "es";
+      d.textContent = m.t;
+      log.appendChild(d);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+  function charlaSend(){
+    var inp = document.getElementById("charla-in");
+    var txt = inp.value.trim();
+    if(!txt) return;
+    var status = document.getElementById("charlastatus");
+    if(!getClaudeKey()){ status.textContent = "Key needed: add it in the Diario card first."; return; }
+    var msgs = charlaMsgs();
+    msgs.push({ r: "u", t: txt });
+    inp.value = "";
+    renderCharla();
+    status.textContent = "...";
+    var apiMsgs = msgs.slice(-20).map(function(m){ return { role: m.r === "u" ? "user" : "assistant", content: m.t }; });
+    var sys = CHARLA_SYS + "\nThis week: " + weekCtx() + "\nHer recent words (use them when natural): " + recentWords(6).join(", ") + "\nToday's theme: " + todayTheme();
+    claudeMsgs(sys, apiMsgs, 300).then(function(res){
+      msgs.push({ r: "a", t: res });
+      state.charla.msgs = msgs.slice(-40);
+      status.textContent = "";
+      renderCharla();
+      persist();
+    }).catch(function(err){
+      status.textContent = (err && err.nokey) ? "Key needed: add it in the Diario card first." : "Error: try again.";
+    });
+  }
+  document.getElementById("charla-send").addEventListener("click", charlaSend);
+  document.getElementById("charla-in").addEventListener("keydown", function(e){ if(e.key === "Enter") charlaSend(); });
+  document.getElementById("charla-new").addEventListener("click", function(){
+    state.charla = { date: todayKey(), msgs: [] };
+    renderCharla();
+    persist();
+  });
+
+  // mission coach
+  var MISSION_SYS = 'Create this week\'s real-life Spanish mini-mission for her. She lives in Barcelona (if the week context mentions Germany, adapt to a video call or a Spanish bar there). Base it on the week\'s focus and her world: bravas on a terraza, La Boqueria, coffee bars, Barça talk. Reply in plain text, short: MISIÓN: (one concrete task, 2-3 sentences, in English) FRASES: (4-6 exact Spanish phrases she can use, each with the English meaning in brackets) TIP: (one confidence tip, one line).';
+  var DEBRIEF_SYS = 'She just did her real-life Spanish mission and her report follows. Reply short and warm in simple English with Spanish examples: what she did well; exactly what to say next time (2-3 phrases with meanings); and one tiny extra challenge for the next attempt. Celebrate that she did it at all.';
+  function renderMission(){
+    if(state.mission && state.mission.text){
+      var box = document.getElementById("missionbox");
+      box.innerHTML = '<span class="fxl">Misión · semana ' + state.mission.week + '</span>';
+      box.appendChild(document.createTextNode(state.mission.text));
+      box.style.display = "block";
+      document.getElementById("missiondebrief").style.display = "block";
+      if(state.mission.debrief){
+        var db = document.getElementById("debriefbox");
+        db.innerHTML = '<span class="fxl">Debrief</span>';
+        db.appendChild(document.createTextNode(state.mission.debrief));
+        db.style.display = "block";
+      }
+    }
+  }
+  aiButton(document.getElementById("missionbtn"), "Dame la misión", function(){
+    var user = weekCtx() + "\nHer recent words: " + recentWords(6).join(", ");
+    return claudeReq(MISSION_SYS, user, 700).then(function(text){
+      state.mission = { week: (state.plan && state.plan.current) || 1, text: text };
+      persist();
+      renderMission();
+    });
+  });
+  aiButton(document.getElementById("debriefbtn"), "Debrief", function(){
+    var rep = document.getElementById("mission-report").value.trim();
+    if(!rep) return Promise.resolve();
+    var user = "The mission was:\n" + ((state.mission && state.mission.text) || "") + "\n\nHer report:\n" + rep;
+    return claudeReq(DEBRIEF_SYS, user, 600).then(function(text){
+      state.mission.debrief = text;
+      persist();
+      renderMission();
+    });
+  });
+
   // restore today's cached AI content on load
   function initAI(){
     var t = todayKey(), c = state.cache;
@@ -1515,6 +1820,12 @@
     if(c.repaso && c.repaso.text) renderRepaso(c.repaso.text);
     if(c.b1 && c.b1.obj) renderB1(c.b1.obj);
     renderUnused();
+    reconcileFreezes();
+    renderMatch();
+    renderCharla();
+    renderMission();
+    renderBackupInfo();
+    renderHeader();
   }
 
   // ---------- boot ----------
