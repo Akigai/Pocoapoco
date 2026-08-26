@@ -366,10 +366,25 @@
             <button class="btn" id="w-add">Añadir</button>
           </div>
           <div class="chips" id="todaywords"></div>
-          <div class="row" style="margin-top:12px"><button class="btn ghost" id="suggbtn">Sugerencias de hoy</button><button class="btn ghost" id="fotobtn">La foto de hoy</button></div>
-          <input type="file" id="fotoin" accept="image/*" capture="environment" style="display:none">
+          <div class="row" style="margin-top:12px"><button class="btn ghost" id="suggbtn">Sugerencias de hoy</button></div>
           <div class="chips" id="suggchips"></div>
           <p class="hint">Grab words from whatever you watch or read today. Tap a word in Sugerencias to add it.</p>
+        </div>
+      </div>
+
+      <div class="card open" id="card-foto">
+        <div class="cardhead" role="button" tabindex="0" data-card="foto">
+          <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+          <span class="titles">
+            <span class="t">La foto de hoy</span>
+            <span class="s">Point, shoot, learn the words</span>
+          </span>
+        </div>
+        <div class="cardbody">
+          <p class="hint" style="margin-top:0">Photograph anything — the market, your plate, the street — and Claude gives you the Spanish for what's in it. Tap a word to add it to your list.</p>
+          <div class="row"><button class="btn" id="fotobtn">Abrir la cámara</button></div>
+          <input type="file" id="fotoin" accept="image/*" capture="environment" style="display:none">
+          <div class="chips" id="fotochips"></div>
         </div>
       </div>
 
@@ -1461,8 +1476,8 @@
   });
 
   // Sugerencias de palabras
-  function renderSugg(items){
-    var box = document.getElementById("suggchips");
+  function renderSugg(items, targetId){
+    var box = document.getElementById(targetId || "suggchips");
     box.innerHTML = "";
     items.forEach(function(w){
       if(!w || !w.es) return;
@@ -1707,7 +1722,7 @@
     });
   }
   document.getElementById("fotobtn").addEventListener("click", function(){
-    if(!getClaudeKey()){ aiErr(document.getElementById("fotobtn"), {nokey:true}, "La foto de hoy"); return; }
+    if(!getClaudeKey()){ aiErr(document.getElementById("fotobtn"), {nokey:true}, "Abrir la cámara"); return; }
     document.getElementById("fotoin").click();
   });
   document.getElementById("fotoin").addEventListener("change", function(e){
@@ -1721,12 +1736,12 @@
       return claudeJSONReq(FOTO_SYS, user, 600);
     }).then(function(items){
       btn.disabled = false;
-      btn.textContent = "La foto de hoy";
-      renderSugg(items);
+      btn.textContent = "Abrir la cámara";
+      renderSugg(items, "fotochips");
       document.getElementById("fotoin").value = "";
     }).catch(function(err){
       document.getElementById("fotoin").value = "";
-      aiErr(btn, err, "La foto de hoy");
+      aiErr(btn, err, "Abrir la cámara");
     });
   });
 
@@ -1841,7 +1856,7 @@
     { t: "Hola, Alisha 🍊",
       d: "<p>This is your 8-week Spanish sprint: <b>A1 → B1</b>, about 90 minutes a day, and half of that is watching Barça, F1 and series you already love.</p><p>Don't worry about learning the app — this quick tour shows you everything. You can reopen it any time with the <b>?</b> at the top.</p>" },
     { t: "Hoy: your day, 6 small things",
-      d: "<p>The <b>Hoy</b> tab is your daily checklist. Tap a card to open it, tap the circle to tick it off:</p><p>☀ <b>Morning journal</b> — one paragraph with your coffee (the <b>Ideas</b> button helps if you're blank).<br>✍ <b>10 words</b> — grab them from your day.<br>💬 <b>AI conversation</b> — 20 min out loud with ChatGPT.<br>📺 <b>Watch something</b> — in Spanish, subtitles in Spanish.<br>🔁 <b>Eco</b> — your phone reads sentences aloud; you repeat.<br>🌙 <b>Evening journal</b> — then tap <b>Corrección con Claude</b> and Claude corrects it right here and gives you tiny tasks.</p>" },
+      d: "<p>The <b>Hoy</b> tab is your daily checklist. Tap a card to open it, tap the circle to tick it off:</p><p>☀ <b>Morning journal</b> — one paragraph with your coffee (the <b>Ideas</b> button helps if you're blank).<br>✍ <b>10 words</b> — grab them from your day.<br>💬 <b>AI conversation</b> — 20 min out loud with ChatGPT.<br>📺 <b>Watch something</b> — in Spanish, subtitles in Spanish.<br>🔁 <b>Eco</b> — your phone reads sentences aloud; you repeat.<br>🌙 <b>Evening journal</b> — then tap <b>Corrección con Claude</b> and Claude corrects it right here and gives you tiny tasks.</p><p>⚽ And on Barça matchdays, tap <b>¿Partido hoy?</b> at the top — the whole day's Spanish (ideas, words, conversation, Eco) turns into match talk.</p>" },
     { t: "Claude is your teacher inside the app",
       d: "<p>Every <b>Corrección</b> teaches the app what you find hard — so <b>Prompt de hoy</b> (in the conversation card) writes you a fresh ChatGPT prompt each day built around <i>your</i> mistakes and <i>your</i> new words.</p><p><b>Sugerencias</b> suggests words to tap-and-add, and <b>La foto de hoy</b> is magic: photo anything — the market, your fridge — and get the Spanish words for what's in it.</p>" },
     { t: "Charla y Palabras",
