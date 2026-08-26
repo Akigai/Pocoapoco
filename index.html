@@ -7,62 +7,68 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
   :root{
-    --bg:#FAF6EE;
+    --bg:#F8F4EC;
     --card:#FFFFFF;
-    --card2:#F3EDE0;
-    --ink:#223247;
-    --muted:#67788C;
-    --line:#E5DCC9;
-    --accent:#E45F1E;
-    --accent-soft:#FBE8DC;
-    --cobalt:#2A5CAA;
-    --cobalt-soft:#E3EBF7;
+    --card2:#F1EBDF;
+    --ink:#1B2A4A;
+    --muted:#5D6B85;
+    --line:#E2DACB;
+    --accent:#A50044;
+    --accent-soft:#F6E1EA;
+    --cobalt:#004D98;
+    --cobalt-soft:#E1EAF5;
     --good:#3A8F5E;
     --good-soft:#E1F0E7;
-    --p1:#2A5CAA; --p1s:#E3EBF7;
+    --gold:#A8821A;
+    --gold-soft:#F6EDD6;
+    --p1:#004D98; --p1s:#E1EAF5;
     --p2:#1F8A70; --p2s:#DFF2EC;
     --p3:#7A4FA8; --p3s:#EEE6F7;
-    --p4:#E45F1E; --p4s:#FBE8DC;
-    --shadow:0 1px 2px rgba(34,50,71,.06), 0 6px 18px rgba(34,50,71,.05);
+    --p4:#A50044; --p4s:#F6E1EA;
+    --shadow:0 1px 2px rgba(27,42,74,.06), 0 6px 18px rgba(27,42,74,.05);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#131D29;
-      --card:#1C2937;
-      --card2:#233343;
-      --ink:#EAE4D8;
-      --muted:#8FA0B2;
-      --line:#31435A;
-      --accent:#F27E43;
-      --accent-soft:#3A2A1F;
-      --cobalt:#82AAE8;
-      --cobalt-soft:#22344E;
+      --bg:#101a2e;
+      --card:#1a2540;
+      --card2:#223052;
+      --ink:#EFE9DC;
+      --muted:#93A1BC;
+      --line:#31405f;
+      --accent:#E0568A;
+      --accent-soft:#3C1B2C;
+      --cobalt:#6FA3E8;
+      --cobalt-soft:#1C2E4A;
       --good:#57B37F;
       --good-soft:#1E3A2C;
-      --p1:#82AAE8; --p1s:#22344E;
+      --gold:#F2C94C;
+      --gold-soft:#3a3352;
+      --p1:#6FA3E8; --p1s:#1C2E4A;
       --p2:#55C2A2; --p2s:#1C3A32;
       --p3:#B58FE0; --p3s:#33284A;
-      --p4:#F27E43; --p4s:#3A2A1F;
+      --p4:#E0568A; --p4s:#3C1B2C;
       --shadow:0 1px 2px rgba(0,0,0,.25), 0 6px 18px rgba(0,0,0,.2);
     }
   }
   :root[data-theme="dark"]{
-    --bg:#131D29;
-    --card:#1C2937;
-    --card2:#233343;
-    --ink:#EAE4D8;
-    --muted:#8FA0B2;
-    --line:#31435A;
-    --accent:#F27E43;
-    --accent-soft:#3A2A1F;
-    --cobalt:#82AAE8;
-    --cobalt-soft:#22344E;
+    --bg:#101a2e;
+    --card:#1a2540;
+    --card2:#223052;
+    --ink:#EFE9DC;
+    --muted:#93A1BC;
+    --line:#31405f;
+    --accent:#E0568A;
+    --accent-soft:#3C1B2C;
+    --cobalt:#6FA3E8;
+    --cobalt-soft:#1C2E4A;
     --good:#57B37F;
     --good-soft:#1E3A2C;
-    --p1:#82AAE8; --p1s:#22344E;
+    --gold:#F2C94C;
+    --gold-soft:#3a3352;
+    --p1:#6FA3E8; --p1s:#1C2E4A;
     --p2:#55C2A2; --p2s:#1C3A32;
     --p3:#B58FE0; --p3s:#33284A;
-    --p4:#F27E43; --p4s:#3A2A1F;
+    --p4:#E0568A; --p4s:#3C1B2C;
     --shadow:0 1px 2px rgba(0,0,0,.25), 0 6px 18px rgba(0,0,0,.2);
   }
   *{box-sizing:border-box}
@@ -88,8 +94,75 @@
     border-radius:999px;padding:5px 12px;font-weight:700;
     font-family:"Gabarito",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;
   }
-  .progressbar{height:6px;background:var(--card2);border-radius:999px;margin:14px 0 4px;overflow:hidden}
-  .progressbar b{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .35s ease}
+  .headrow{display:flex;align-items:flex-end;gap:10px}
+  .headleft{flex:1 1 auto;min-width:0}
+  .chipsrow{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+  .progressbar{height:8px;background:var(--card2);border-radius:999px;margin:12px 0 4px;overflow:hidden}
+  .progressbar b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cobalt),var(--accent));border-radius:999px;transition:width .35s ease}
+  /* Leo mascot */
+  .leo{flex:0 0 auto;width:84px;height:104px;position:relative}
+  .leo svg,.leo img{width:100%;height:100%;display:block}
+  .leo img{object-fit:contain}
+  .leo .lg-arm{transform-box:fill-box;transform-origin:top center;transition:transform .35s ease}
+  .leo .lg-head{transform-box:fill-box;transform-origin:center 80%;transition:transform .35s ease}
+  .leo .lg-ball{transform-box:fill-box}
+  .leo .lg-eyes-closed,.leo .lg-mouth-sad,.leo .lg-zzz{display:none}
+  .leo.idle .lg-body-all{animation:leobob 2.2s ease-in-out infinite}
+  .leo.idle .lg-ball,.leo.happy .lg-ball{animation:leoball 1.1s ease-in-out infinite}
+  .leo.cheer .lg-armL{transform:rotate(-125deg)}
+  .leo.cheer .lg-armR{transform:rotate(125deg)}
+  .leo.cheer .lg-body-all,.leo.party .lg-body-all{animation:leojump .55s ease-in-out 2}
+  .leo.party .lg-armL{transform:rotate(-135deg)}
+  .leo.party .lg-armR{transform:rotate(135deg)}
+  .leo.happy .lg-armL{transform:rotate(-40deg)}
+  .leo.happy .lg-armR{transform:rotate(40deg)}
+  .leo.sad .lg-head{transform:rotate(7deg) translateY(2px)}
+  .leo.sad .lg-mouth{display:none}
+  .leo.sad .lg-mouth-sad{display:block}
+  .leo.sleep .lg-eyes{display:none}
+  .leo.sleep .lg-eyes-closed{display:block}
+  .leo.sleep .lg-mouth{display:none}
+  .leo.sleep .lg-zzz{display:block;animation:leobob 2.4s ease-in-out infinite}
+  @keyframes leobob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  @keyframes leoball{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes leojump{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .cf{position:fixed;top:-14px;width:8px;height:13px;z-index:90;border-radius:2px;animation:cfall 2.4s linear forwards;pointer-events:none}
+  @keyframes cfall{to{transform:translateY(108vh) rotate(560deg)}}
+  #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-80px);z-index:95;background:var(--ink);color:var(--bg);font-family:"Gabarito",sans-serif;font-weight:700;padding:10px 20px;border-radius:999px;box-shadow:var(--shadow);transition:transform .35s ease;font-size:.95rem;max-width:88vw;text-align:center}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  /* penalties */
+  #pitch{position:relative;margin-bottom:12px}
+  #pball{transition:cx .5s ease, cy .5s ease}
+  #keeper{transform-box:fill-box;transform-origin:center;transition:transform .45s ease}
+  #pitch.goal #pball{cx:162px;cy:22px}
+  #pitch.goalL #pball{cx:38px;cy:22px}
+  #pitch.save #keeper{transform:translateX(-46px) rotate(-55deg)}
+  #pitch.saveR #keeper{transform:translateX(46px) rotate(55deg)}
+  #bobo{font-family:"Gabarito",sans-serif;font-weight:800;color:var(--accent);text-align:center;font-size:1.05rem;margin-top:6px}
+  /* parejas */
+  #pj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .pcard{aspect-ratio:1/1.15;border-radius:12px;background:var(--cobalt);border:none;cursor:pointer;font:inherit;font-weight:700;font-size:.8rem;color:transparent;padding:4px;transition:background .25s ease;overflow:hidden;line-height:1.2}
+  .pcard.flip{background:var(--card);border:1.5px solid var(--cobalt);color:var(--ink)}
+  .pcard.won{background:var(--good-soft);border:1.5px solid var(--good);color:var(--good);cursor:default}
+  /* liga + vitrina */
+  .ligarow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  .ligarow:last-child{border-bottom:none}
+  .ligarow .jn{font-family:"Gabarito",sans-serif;font-weight:800;color:var(--muted);width:26px;font-variant-numeric:tabular-nums}
+  .ligarow .op{flex:1;font-weight:700}
+  .ligarow .rs{font-family:"Gabarito",sans-serif;font-weight:800;font-variant-numeric:tabular-nums}
+  .ligarow .rs.W{color:var(--good)} .ligarow .rs.D{color:var(--gold)} .ligarow .rs.L{color:var(--accent)} .ligarow .rs.P{color:var(--muted);font-weight:600}
+  .ligatotal{font-family:"Gabarito",sans-serif;font-weight:800;padding-top:8px;color:var(--cobalt)}
+  .vitrina{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .trofeo{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center}
+  .trofeo svg{width:30px;height:30px;display:block;margin:0 auto 4px}
+  .trofeo .tn{font-family:"Gabarito",sans-serif;font-weight:700;font-size:.68rem;line-height:1.2}
+  .trofeo .tc{font-size:.6rem;color:var(--muted);font-weight:600}
+  .trofeo.locked{opacity:.45}
+  .trofeo.earned{border-color:var(--gold);background:var(--gold-soft)}
+  .trofeo.earned .tn{color:var(--gold)}
+  /* leo bubble */
+  .leobubble{position:absolute;bottom:98%;right:0;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:5px 10px;font-family:"Gabarito",sans-serif;font-weight:700;font-size:.68rem;color:var(--ink);white-space:nowrap;box-shadow:var(--shadow);display:none;z-index:6}
+  .leobubble.show{display:block}
   .progresslabel{font-size:.8rem;color:var(--muted);font-weight:600}
 
   main{display:block}
@@ -97,7 +170,7 @@
   section.panel.active{display:block}
 
   .card{
-    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
     box-shadow:var(--shadow);margin:12px 0;overflow:hidden;
   }
   .cardhead{
@@ -105,7 +178,7 @@
     cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
   }
   .cardhead .icon{
-    flex:0 0 auto;width:38px;height:38px;border-radius:12px;
+    flex:0 0 auto;width:40px;height:40px;border-radius:13px;
     display:flex;align-items:center;justify-content:center;
     background:var(--cobalt-soft);color:var(--cobalt);
   }
@@ -304,14 +377,22 @@
 
 <div class="wrap">
   <header class="top">
-    <div class="brand">Poco a poco <small>español, un día a la vez</small><button id="helpbtn" title="How the app works">?</button></div>
-    <div class="dateline">
-      <span id="fecha"></span>
-      <span class="streak" id="streak" title="Días seguidos">&#128293; <span id="streakN">0</span><span id="frz"></span></span>
+    <div class="brand">Poco a poco <small>més que un plan</small><button id="helpbtn" title="How the app works">?</button></div>
+    <div class="headrow">
+      <div class="headleft">
+        <div class="dateline">
+          <span id="fecha"></span>
+        </div>
+        <div class="chipsrow">
+          <span class="streak" id="streak" title="Días seguidos">&#128293; <span id="streakN">0</span><span id="frz"></span></span>
+          <span class="streak" id="dorsal" style="background:var(--gold-soft);color:var(--gold)" title="Tu dorsal"></span>
+        </div>
+        <div class="progressbar" id="pbar"><b id="pfill"></b></div>
+        <div class="progresslabel" id="plabel"></div>
+        <button id="weekline" title="Ver el plan"><i></i><span id="weekline-txt"></span></button>
+      </div>
+      <div id="leo" class="leo idle" aria-hidden="true"></div>
     </div>
-    <div class="progressbar" id="pbar"><b id="pfill"></b></div>
-    <div class="progresslabel" id="plabel"></div>
-    <button id="weekline" title="Ver el plan"><i></i><span id="weekline-txt"></span></button>
   </header>
 
   <main>
@@ -319,6 +400,7 @@
     <section class="panel active" id="panel-hoy">
       <div class="note" id="streakNote" style="display:none;background:var(--accent-soft);color:var(--accent)"></div>
       <button class="matchtoggle" id="matchbtn">&#9917; ¿Partido hoy?</button>
+      <div class="note" id="goldenNote" style="display:none;background:var(--gold-soft);color:var(--gold)"></div>
       <div class="note sunday" id="sundayNote" style="display:none">
         Domingo: light day. Review your words (Palabras tab), watch an episode, then tap "Generar repaso" in the Plan tab for Claude's report on your week. No pressure.
       </div>
@@ -401,7 +483,7 @@
         </div>
         <div class="cardbody">
           <p class="hint" style="margin-top:0">Open ChatGPT, start a voice conversation and paste this. Nobody is listening. This is where the confidence gets built.</p>
-          <div class="promptbox" id="aiprompt">You are my friendly Spanish conversation partner. I live in Barcelona and I am rebuilding my confidence, so we speak in simple, everyday Spanish. Keep your replies short (2 or 3 sentences) and ask me one easy question at a time. About me: I am from Kerala and moved to Barcelona because I love the city and Messi. I have a degree in Sports Management and Business. I am a huge FC Barcelona fan (Messi, Pedri). My favourite topics: football, F1, tennis, food (patatas bravas!), shopping, travel, and Barcelona itself. Use these topics a lot, and sometimes bring in sports business. When I make a mistake, briefly say the corrected version and carry on; never lecture me. If I get stuck I will say the word in English and you give it to me in Spanish. Speak slowly and clearly. I am following an 8-week plan and I will tell you which week I am in and its focus (for example: week 3, talking about yesterday in the past tense); steer the conversation so I practise that focus a lot. Start by greeting me and asking how my morning was.</div>
+          <div class="promptbox" id="aiprompt">Roleplay as "Leo", a friendly cartoon Messi character, and never break character. You are humble, warm and football-mad; you may occasionally use a light Argentine word (che, dale), but you always speak simple, everyday Spain-Spanish with tú forms, slowly and clearly, because I am learning (A1-A2, aiming for B1). Keep replies short (2 or 3 sentences) and ask me one easy question at a time. About me: I am from Kerala and moved to Barcelona because I love the city and Messi. I have a degree in Sports Management and Business. Huge Barça fan. Favourite topics: football, F1, tennis, food (patatas bravas!), shopping, travel, Barcelona. Use these a lot. When I make a mistake, briefly say the corrected version and carry on; never lecture me. If I get stuck I will say the word in English and you give it to me in Spanish. I am following an 8-week plan and I will tell you which week I am in and its focus; steer the conversation so I practise that focus a lot. Start by greeting me as Leo and asking how my morning was.</div>
           <div class="row"><button class="btn" id="dynprompt">Prompt de hoy</button><button class="btn secondary" id="copyprompt">Copiar prompt</button></div>
           <p class="hint">"Prompt de hoy" builds today's personalised prompt from your week's focus, your recurring mistakes and your newest words.</p>
         </div>
@@ -442,6 +524,12 @@
             <div class="row"><button class="btn" id="ecoplay">Escuchar</button><button class="btn secondary" id="ecoslow">Lento</button><button class="btn ghost" id="econext">Siguiente</button></div>
             <p class="hint" id="ecocount"></p>
             <p class="hint">Voice sounding robotic? On iPhone: Settings → Accessibility → Spoken Content → Voices → Spanish → download <b>Mónica (Enhanced)</b>. The app will use it automatically.</p>
+            <div class="row"><button class="btn ghost" id="rompebtn">Ordena la frase</button></div>
+            <div id="rompe" style="display:none">
+              <div id="rompe-answer" class="ecoline" style="min-height:2.4em"></div>
+              <div class="chips" id="rompe-chips"></div>
+              <p class="hint" id="rompe-status"></p>
+            </div>
           </div>
         </div>
       </div>
@@ -495,7 +583,7 @@
 
     <!-- CHARLA -->
     <section class="panel" id="panel-charla">
-      <p class="hint" style="margin-top:6px">Text chat in easy Spanish, perfect for the metro. Claude corrects gently in brackets and keeps the conversation going. A fresh chat every day.</p>
+      <p class="hint" style="margin-top:6px">Text chat with Leo — yes, that Leo. Simple Spanish, gentle corrections in brackets, and he always wants to talk about the match. A fresh chat every day, perfect for the metro.</p>
       <div id="charlalog"></div>
       <p class="hint" id="charlastatus" style="min-height:1em;margin:0"></p>
       <div class="row"><input type="text" id="charla-in" lang="es" placeholder="Escribe en español..." autocomplete="off" style="flex:1"><button class="btn" id="charla-send">Enviar</button></div>
@@ -511,8 +599,10 @@
     <section class="panel" id="panel-palabras">
       <div class="stat"><span class="big" id="totalwords">0</span><span class="lbl">palabras aprendidas</span></div>
       <div class="row" style="margin-bottom:6px">
-        <button class="btn" id="startquiz">Repasar</button>
+        <button class="btn" id="startquiz">Penaltis</button>
+        <button class="btn secondary" id="parejasbtn">Parejas</button>
       </div>
+      <p class="hint" style="margin-top:0">Penaltis: each due word is a spot kick. Parejas: match the pairs.</p>
       <div class="wordgroups" id="wordgroups"></div>
     </section>
 
@@ -549,6 +639,14 @@
         <div class="legend" id="planlegend"></div>
         <div class="track" id="plantrack"></div>
         <div id="roadmap"></div>
+
+        <h2>La Liga de Alisha</h2>
+        <p>Eight weeks, eight fixtures. A strong week (5+ days played, 3+ perfect) wins the match. Week 8 is El Clásico: the B1 final.</p>
+        <div class="menu" id="ligabox"></div>
+
+        <h2>La vitrina</h2>
+        <p>Trophies are earned, never given. Grey means still waiting.</p>
+        <div class="vitrina" id="vitrina"></div>
 
         <h2>La misión de la semana</h2>
         <p>One real conversation in the wild each week. Claude gives you a concrete mission with the exact phrases; afterwards, tell it how it went and get a debrief.</p>
@@ -621,6 +719,17 @@
 <div class="quizwrap" id="quiz">
   <div class="quizcard">
     <div class="quizmeta" id="quizmeta"></div>
+    <div id="pitch">
+      <svg viewBox="0 0 200 80" width="100%" height="80">
+        <rect x="0" y="70" width="200" height="10" fill="var(--p2)" opacity=".35"/>
+        <path d="M30 70 L30 14 L170 14 L170 70" fill="none" stroke="var(--ink)" stroke-width="3" opacity=".75"/>
+        <path d="M30 14 L44 26 L44 70 M170 14 L156 26 L156 70 M44 26 L156 26" fill="none" stroke="var(--ink)" stroke-width="1" opacity=".25"/>
+        <g id="keeper"><rect x="92" y="34" width="16" height="26" rx="6" fill="var(--gold)"/><circle cx="100" cy="28" r="7" fill="#E9B285"/></g>
+        <circle id="pball" cx="100" cy="64" r="6" fill="#fff" stroke="var(--ink)" stroke-width="1.5"/>
+        <text id="pgoal" x="100" y="50" text-anchor="middle" font-family="Gabarito,sans-serif" font-weight="800" font-size="20" fill="var(--accent)" style="display:none">¡GOOOL!</text>
+      </svg>
+      <div id="bobo" style="display:none">"¿Qué mirás, bobo? Andá pa'allá."</div>
+    </div>
     <div class="quizface" id="quizface" role="button" tabindex="0">
       <div class="es" id="quiz-es"></div>
       <div class="en" id="quiz-en"></div>
@@ -633,6 +742,19 @@
       <button class="btn ghost" id="quizclose">Cerrar</button>
     </div>
     <p class="hint" style="text-align:center">Tap the card to see the meaning, then be honest: did you know it?</p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- PAREJAS -->
+<div class="quizwrap" id="parejas">
+  <div class="quizcard">
+    <div class="quizmeta" id="pj-meta"></div>
+    <div id="pj-grid"></div>
+    <div class="row" style="justify-content:center;margin-top:14px">
+      <button class="btn ghost" id="pj-close">Cerrar</button>
+    </div>
   </div>
 </div>
 
@@ -778,8 +900,30 @@
     document.getElementById("frz").textContent = (state.freezes ? " · ❄" + state.freezes : "");
     var n = doneCount();
     document.getElementById("pfill").style.width = (n/6*100) + "%";
-    var labels = ["Un día nuevo. Empieza por cualquiera.","1 de 6. Ya está en marcha.","2 de 6. Poco a poco.","3 de 6. La mitad.","4 de 6. Más de la mitad.","5 de 6. Casi.","6 de 6. Día completo. Olé."];
-    document.getElementById("plabel").textContent = labels[n];
+    var min = n * 15;
+    var clock;
+    if(n === 0) clock = "Kick-off pendiente · 0 de 6";
+    else if(n < 6) clock = "Minuto " + min + "' del partido · " + n + " de 6" + (n >= 4 ? " · la afición aprieta" : "");
+    else clock = "¡FINAL! 90' · Día completo · Visca el Barça";
+    document.getElementById("plabel").textContent = clock;
+    var hour = new Date().getHours();
+    if(n >= 6){
+      if(!day().celebrated){
+        day().celebrated = true;
+        lightSave();
+        confetti(70);
+        setLeo("party");
+        setTimeout(function(){ renderHeader(); }, 2600);
+      } else {
+        setLeo(hour >= 22 ? "sleep" : "happy");
+      }
+    } else if(hour >= 17 && n < 3){
+      setLeo("sad");
+    } else if(currentLeoPose !== "cheer"){
+      setLeo("idle");
+    }
+    renderGame();
+    renderGolden();
     document.getElementById("sundayNote").style.display = (new Date().getDay() === 0) ? "block" : "none";
     var sn = document.getElementById("streakNote");
     var hr = new Date().getHours(), st = streak();
@@ -836,8 +980,10 @@
       e.stopPropagation();
       var c = btn.getAttribute("data-check");
       var d = day();
-      d.checks[c] = !isChecked(c);
+      var turningOn = !isChecked(c);
+      d.checks[c] = turningOn;
       renderChecks();
+      if(turningOn && doneCount() < 6) leoCheer();
       persist();
     });
   });
@@ -850,6 +996,7 @@
       d[which] = txt;
       if(txt.trim()) d.checks[which] = true;
       renderChecks(); renderDiario();
+      checkGolden();
       persist();
       btn.textContent = "Guardado";
       setTimeout(function(){ btn.textContent = "Guardar"; }, 1600);
@@ -1055,6 +1202,7 @@
       (obj.logros || []).forEach(function(l){ if(l) state.learner.wins.push({ text: l, date: todayKey() }); });
       state.learner.wins = state.learner.wins.slice(-30);
       renderChecks(); renderDiario(); renderUnused();
+      checkGolden();
       persist();
       btn.textContent = "Corrección con Claude";
     }).catch(function(err){
@@ -1154,7 +1302,7 @@
   function renderPalabras(){
     document.getElementById("totalwords").textContent = state.words.length;
     var due = state.words.length ? dueWords().length : 0;
-    document.getElementById("startquiz").textContent = due ? "Repasar (" + due + ")" : "Repasar";
+    document.getElementById("startquiz").textContent = due ? "Penaltis (" + due + ")" : "Penaltis";
     var box = document.getElementById("wordgroups");
     box.innerHTML = "";
     if(!state.words.length){
@@ -1203,35 +1351,74 @@
     }
     return a;
   }
+  var penGoals = 0, penShots = 0;
+  function resetPitch(){
+    var p = document.getElementById("pitch");
+    p.classList.remove("goal", "goalL", "save", "saveR");
+    document.getElementById("pgoal").style.display = "none";
+    document.getElementById("bobo").style.display = "none";
+  }
   function startQuiz(){
     if(!state.words.length) return;
     var due = shuffle(dueWords()).slice(0, 20);
     quizOrder = due.length ? due : shuffle(state.words.slice()).slice(0, 10);
-    quizIdx = 0;
+    quizIdx = 0; penGoals = 0; penShots = 0;
+    resetPitch();
     document.getElementById("quiz").classList.add("active");
     showQuizCard();
   }
   function showQuizCard(){
     revealed = false;
+    resetPitch();
     document.getElementById("quizanswers").style.display = "none";
     var w = quizOrder[quizIdx];
     document.getElementById("quiz-es").textContent = w.es;
     document.getElementById("quiz-en").textContent = "";
-    document.getElementById("quizmeta").textContent = (quizIdx + 1) + " / " + quizOrder.length;
+    document.getElementById("quizmeta").textContent = "Penalti " + (quizIdx + 1) + " de " + quizOrder.length + " · Goles: " + penGoals;
   }
   function quizAnswer(knew){
     var w = quizOrder[quizIdx];
     var i = (w.sr && typeof w.sr.i === "number") ? w.sr.i : -1;
     i = knew ? Math.min(i + 1, SR_INTERVALS.length - 1) : 0;
     w.sr = { i: i, due: keyPlus(SR_INTERVALS[i]) };
-    persist();
-    quizIdx++;
-    if(quizIdx >= quizOrder.length){
-      document.getElementById("quiz").classList.remove("active");
-      renderPalabras();
-      return;
+    penShots++;
+    var p = document.getElementById("pitch");
+    document.getElementById("quizanswers").style.display = "none";
+    if(knew){
+      penGoals++;
+      state.gamePts += 2;
+      p.classList.add(Math.random() < .5 ? "goal" : "goalL");
+      setTimeout(function(){ document.getElementById("pgoal").style.display = "block"; }, 420);
+    } else {
+      p.classList.add(Math.random() < .5 ? "save" : "saveR");
     }
-    showQuizCard();
+    persist();
+    setTimeout(function(){
+      quizIdx++;
+      if(quizIdx >= quizOrder.length){
+        var perfect = penShots >= 5 && penGoals === penShots;
+        document.getElementById("quizmeta").textContent = "Final: " + penGoals + " de " + penShots + " goles" + (perfect ? " · TANDA PERFECTA" : "");
+        if(perfect){
+          state.gamePts += 25;
+          persist();
+          confetti(50);
+          document.getElementById("bobo").style.display = "block";
+          setTimeout(function(){
+            document.getElementById("quiz").classList.remove("active");
+            renderPalabras(); renderGame();
+            setLeo("bobo");
+            leoSay('"¿Qué mirás, bobo?"', 5500);
+            setTimeout(function(){ renderHeader(); }, 6000);
+          }, 3200);
+        } else {
+          toast("Goles: " + penGoals + " de " + penShots + " · +" + (penGoals * 2) + " XP");
+          document.getElementById("quiz").classList.remove("active");
+          renderPalabras(); renderGame();
+        }
+        return;
+      }
+      showQuizCard();
+    }, 1000);
   }
   document.getElementById("startquiz").addEventListener("click", startQuiz);
   document.getElementById("quizface").addEventListener("click", function(){
@@ -1252,6 +1439,7 @@
     document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.getAttribute("data-tab") === name); });
     document.querySelectorAll("section.panel").forEach(function(p){ p.classList.remove("active"); });
     document.getElementById("panel-" + name).classList.add("active");
+    if(name === "plan"){ try { renderLiga(); renderVitrina(); } catch(e){} }
     window.scrollTo(0, 0);
   }
   document.querySelectorAll(".tab").forEach(function(tab){
@@ -1429,7 +1617,7 @@
   // ---------- AI features ----------
   var IDEAS_SYS = 'Spanish teacher. Student is A1-A2, lives in Barcelona, loves Barça, F1, food, shopping, travel. Create 3 short writing starters for her journal: in simple Spanish, one line each, openings she can continue. Use this week\'s focus and today\'s theme. Reply with a JSON array only: ["...","...","..."]';
   var SUGG_SYS = 'Spanish teacher. Suggest 10 useful Spanish words or expressions for level A1-B1 that fit the given theme and this week\'s grammar focus. Skip anything in the exclude list. Mix nouns, verbs and expressions. Reply with JSON only: [{"es":"la palabra","ml":"the meaning in simple English"}]';
-  var CONV_SYS = 'Write the prompt she will paste into ChatGPT voice mode (plain text only, in English). The prompt must tell the AI to: speak simple everyday Spanish; keep replies to 2-3 sentences with one question at a time; correct mistakes briefly and move on, never lecture; speak slowly and clearly; she lives in Barcelona, is from Kerala, loves Barça, Messi, Pedri, F1, tennis, food and shopping. Then weave in the specifics provided: this week\'s focus to practise, her recurring mistakes to gently drill, her new words to bring into conversation, and today\'s theme. Tell the AI to start with a greeting.';
+  var CONV_SYS = 'Write the prompt she will paste into ChatGPT voice mode (plain text only, in English). The prompt must tell the AI to roleplay as "Leo", a friendly cartoon Messi character: humble, warm, football-mad, with an occasional light Argentine word (che, dale), but speaking simple everyday Spain-Spanish (tú forms), slowly and clearly; replies of 2-3 sentences with one question at a time; correct mistakes briefly and move on, never lecture, never break character. She lives in Barcelona, is from Kerala, loves Barça, F1, tennis, food and shopping. Then weave in the specifics provided: this week\'s focus to practise, her recurring mistakes to gently drill, her new words to bring into conversation, and today\'s theme. Tell the AI to start by greeting her as Leo and asking about her morning.';
   var ECO_SYS = 'Create 8 short Spanish sentences for shadowing practice (6-12 words each, A2 level): using this week\'s grammar focus, weaving in some of the given words, set in Barcelona / Barça / food contexts. Reply with a JSON array only: ["...", ...]';
   var REPASO_SYS = 'You are a warm Spanish coach; the student\'s week of data follows. Write a weekly report in plain text in simple English (Spanish only for the language examples), with these labels: MEJORAS: (what improved, with evidence from her own writing) ERRORES TERCOS: (up to 3 stubborn mistakes, with her own examples, explained simply) PALABRAS: (logged vs actually used; 5 words to reuse) MINI-QUIZ: (5 short fill-in-the-gap questions in Spanish; answers at the end) VEREDICTO: (honestly: move to the next week or repeat this one, and why; remind her both count as progress). Keep it compact and encouraging.';
   var B1_SYS = 'Spanish level assessment. The student\'s recent writing and error patterns follow. Assess progress toward B1. Reply with JSON only: {"pct": an honest 0-100 on a scale where A1=5, A2=40, B1=100, "texto":"3-4 sentences in simple English: where she is now, what B1 still needs, one encouragement"}';
@@ -1765,7 +1953,7 @@
   });
 
   // charla (text chat)
-  var CHARLA_SYS = 'You are a warm Spanish conversation partner for a text chat. Student: A1-A2 aiming for B1, lives in Barcelona, from Kerala, loves Barça (Messi, Pedri), F1, tennis, food (patatas bravas), shopping, travel. Reply in simple, everyday Spanish, 1-3 short sentences, and end with one easy question. If her last message had mistakes, start with a very short correction in brackets like [mejor: "..."] and then continue naturally. Never lecture. Keep it light and fun.';
+  var CHARLA_SYS = 'You are "Leo", this app\'s cartoon Messi mascot, texting with Alisha. Personality: humble, warm, playful, football-mad; occasionally drop a light Argentine touch (che, dale, viste) but ALWAYS teach and use simple standard Spain-Spanish (tú forms) because she lives in Barcelona and is A1-A2 aiming for B1. Reply in simple everyday Spanish, 1-3 short sentences, ending with one easy question. If her last message had mistakes, open with a very short correction in brackets like [mejor: "..."] then continue naturally. You love talking about Barça, the match, F1, bravas and Barcelona life. Celebrate her good Spanish like a goal. Never lecture, never break character.';
   if(!state.charla || state.charla.date !== todayKey()) state.charla = state.charla || null;
   function charlaMsgs(){
     if(!state.charla || state.charla.date !== todayKey()) state.charla = { date: todayKey(), msgs: [] };
@@ -1851,6 +2039,402 @@
     });
   });
 
+  // ---------- v4: Leo, XP, penalties, liga, vitrina, golden word, games ----------
+  if(typeof state.gamePts !== "number") state.gamePts = 0;
+  if(!state.trofeos) state.trofeos = [];
+
+  var LEO_SVG = '<svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">' +
+  '<ellipse cx="62" cy="134" rx="28" ry="4" fill="rgba(27,42,74,.10)"/>' +
+  '<g class="lg-body-all">' +
+  '<g class="lg-arm lg-armL" transform="translate(41,60)"><rect x="-4" y="0" width="8" height="24" rx="4" fill="#A50044"/><circle cx="0" cy="26" r="4" fill="#EDBD93"/></g>' +
+  '<g class="lg-arm lg-armR" transform="translate(79,60)"><rect x="-4" y="0" width="8" height="24" rx="4" fill="#A50044"/><circle cx="0" cy="26" r="4" fill="#EDBD93"/></g>' +
+  '<rect x="39" y="57" width="42" height="33" rx="10" fill="#A50044"/>' +
+  '<rect x="46" y="57" width="7" height="33" fill="#004D98"/><rect x="59" y="57" width="7" height="33" fill="#004D98"/><rect x="72" y="57" width="7" height="33" fill="#004D98"/>' +
+  '<text class="lg-num" x="60" y="80" text-anchor="middle" font-family="Gabarito,Arial,sans-serif" font-weight="800" font-size="14" fill="#fff" stroke="#7A0033" stroke-width="2.6" paint-order="stroke">99</text>' +
+  '<rect x="39" y="87" width="42" height="14" rx="6" fill="#004D98"/>' +
+  '<rect x="46" y="100" width="8" height="14" fill="#EDBD93"/><rect x="66" y="100" width="8" height="14" fill="#EDBD93"/>' +
+  '<rect x="46" y="111" width="8" height="14" rx="1" fill="#A50044"/><rect x="66" y="111" width="8" height="14" rx="1" fill="#A50044"/>' +
+  '<rect x="46" y="115" width="8" height="3" fill="#004D98"/><rect x="66" y="115" width="8" height="3" fill="#004D98"/>' +
+  '<path d="M42 130 q0 -5 8 -5 q8 0 8 5 l0 2 l-16 0 z" fill="#20242B"/><path d="M62 130 q0 -5 8 -5 q8 0 8 5 l0 2 l-16 0 z" fill="#20242B"/>' +
+  '<g class="lg-head">' +
+  '<circle cx="37.5" cy="36" r="4.5" fill="#EDBD93"/><circle cx="82.5" cy="36" r="4.5" fill="#EDBD93"/>' +
+  '<circle cx="60" cy="33" r="23" fill="#EDBD93"/>' +
+  '<path d="M38 32 C38 52.5 47 59.5 60 59.5 C73 59.5 82 52.5 82 32 C82 44 74 49.5 66.5 50.5 C64 48.5 56 48.5 53.5 50.5 C46 49.5 38 44 38 32 Z" fill="#7A4527"/>' +
+  '<ellipse cx="60" cy="47.5" rx="6.5" ry="4.2" fill="#EDBD93"/>' +
+  '<path d="M52.5 44.2 Q60 41.2 67.5 44.2 Q66.5 47.2 60 46.8 Q53.5 47.2 52.5 44.2 Z" fill="#7A4527"/>' +
+  '<path d="M56 50.3 Q60 52.6 64 50.3" stroke="#8A5A3A" stroke-width="1.8" fill="none" stroke-linecap="round" class="lg-mouth"/>' +
+  '<path d="M56 52.4 Q60 50 64 52.4" stroke="#8A5A3A" stroke-width="1.8" fill="none" stroke-linecap="round" class="lg-mouth-sad"/>' +
+  '<path d="M37 32 C36 13 48 7.5 60 7.5 C72 7.5 84 13 83 32 C83 25 78.5 20.5 73.5 19.5 C68 19.5 65.5 21.8 60 21.8 C54.5 21.8 52 19.5 46.5 19.5 C41.5 20.5 37 25 37 32 Z" fill="#55371F"/>' +
+  '<rect x="37" y="29" width="4" height="9" fill="#55371F"/><rect x="79" y="29" width="4" height="9" fill="#55371F"/>' +
+  '<g class="lg-eyes">' +
+  '<ellipse cx="52" cy="32.5" rx="2.9" ry="3.6" fill="#2A1B10"/><circle cx="53" cy="31" r="1" fill="#fff"/>' +
+  '<ellipse cx="68" cy="32.5" rx="2.9" ry="3.6" fill="#2A1B10"/><circle cx="69" cy="31" r="1" fill="#fff"/>' +
+  '<path d="M48.6 29.5 q3.4 -1.6 6.8 0" stroke="#D9A87C" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+  '<path d="M64.6 29.5 q3.4 -1.6 6.8 0" stroke="#D9A87C" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+  '</g>' +
+  '<g class="lg-eyes-closed" stroke="#2A1B10" stroke-width="1.8" stroke-linecap="round"><path d="M49 32.5 h6"/><path d="M65 32.5 h6"/></g>' +
+  '<path d="M47.5 25.5 q4.5 -1.8 8 -.4" stroke="#4A2E1A" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+  '<path d="M64.5 25.1 q3.5 -1.4 8 .4" stroke="#4A2E1A" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+  '<path d="M59.2 35 q1.8 2.6 0 4.6" stroke="#D9A87C" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+  '</g></g>' +
+  '<g class="lg-ball"><circle cx="97" cy="123" r="10" fill="#fff" stroke="#20242B" stroke-width="1.6"/>' +
+  '<path d="M97 117.5 l5 3.6 -1.9 5.9 -6.2 0 -1.9 -5.9 z" fill="#20242B"/>' +
+  '<path d="M97 117.5 l0 -4 M102 121.1 l3.9 -1.4 M100.1 127 l2.5 3.4 M93.9 127 l-2.5 3.4 M92 121.1 l-3.9 -1.4" stroke="#20242B" stroke-width="1.3"/></g>' +
+  '<text class="lg-zzz" x="90" y="20" font-family="Gabarito,Arial,sans-serif" font-weight="800" font-size="13" fill="#5D6B85">z z z</text>' +
+  '</svg><div class="leobubble" id="leobubble"></div>';
+
+  var LEO_POSES = ["idle", "happy", "cheer", "party", "sad", "sleep", "bobo"];
+  var leoFiles = {};   // pose -> first artwork file that exists (webp preferred)
+  var LEO_CHAINS = { idle:["idle"], happy:["idle"], cheer:["cheer","idle"], party:["party","cheer","idle"], sad:["sad"], sleep:["sleep"], bobo:["bobo","party","idle"] };
+  (function leoInit(){
+    var el = document.getElementById("leo");
+    el.innerHTML = LEO_SVG + '<img id="leoimg" alt="" style="display:none">';
+    ["idle", "cheer", "party", "sad", "sleep", "bobo"].forEach(function(p){
+      ["leo-" + p + ".webp", "leo-" + p + ".png"].forEach(function(f){
+        var t = new Image();
+        t.onload = function(){
+          if(!leoFiles[p] || f.indexOf(".webp") !== -1) leoFiles[p] = leoFiles[p] && leoFiles[p].indexOf(".webp") !== -1 ? leoFiles[p] : f;
+          setLeo(currentLeoPose);
+        };
+        t.src = f;
+      });
+    });
+  })();
+  var currentLeoPose = "idle";
+  function setLeo(pose){
+    currentLeoPose = pose;
+    var el = document.getElementById("leo");
+    LEO_POSES.forEach(function(p){ el.classList.remove(p); });
+    el.classList.add(pose);
+    var img = document.getElementById("leoimg");
+    var svg = el.querySelector("svg");
+    var file = null;
+    (LEO_CHAINS[pose] || ["idle"]).some(function(p){ if(leoFiles[p]){ file = leoFiles[p]; return true; } return false; });
+    if(img && svg){
+      if(file){
+        if(img.getAttribute("src") !== file) img.src = file;
+        img.style.display = "block";
+        svg.style.display = "none";
+      } else {
+        img.style.display = "none";
+        svg.style.display = "block";
+      }
+    }
+    var numEl = document.querySelector("#leo .lg-num");
+    if(numEl) numEl.textContent = shirtInfo(xpTotal()).num;
+  }
+  var leoCheerT = null;
+  function leoCheer(){
+    var keep = currentLeoPose;
+    setLeo("cheer");
+    if(leoCheerT) clearTimeout(leoCheerT);
+    leoCheerT = setTimeout(function(){ renderHeader(); }, 1300);
+  }
+  function leoSay(text, ms){
+    var b = document.getElementById("leobubble");
+    if(!b) return;
+    b.textContent = text;
+    b.classList.add("show");
+    setTimeout(function(){ b.classList.remove("show"); }, ms || 3200);
+  }
+  function confetti(n){
+    var cols = ["#004D98", "#A50044", "#EDBB00", "#ffffff"];
+    for(var i = 0; i < (n || 40); i++){
+      var d = document.createElement("div");
+      d.className = "cf";
+      d.style.left = (Math.random() * 100) + "vw";
+      d.style.background = cols[i % cols.length];
+      d.style.animationDelay = (Math.random() * .6) + "s";
+      d.style.animationDuration = (1.8 + Math.random() * 1.2) + "s";
+      document.body.appendChild(d);
+      setTimeout(function(el){ return function(){ el.remove(); }; }(d), 3400);
+    }
+  }
+  var toastT = null;
+  function toast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    if(toastT) clearTimeout(toastT);
+    toastT = setTimeout(function(){ t.classList.remove("show"); }, 2800);
+  }
+  function lightSave(){
+    state.updatedAt = Date.now();
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  // XP + dorsal ladder
+  var DORSALS = [99, 77, 65, 54, 47, 39, 33, 28, 24, 21, 19, 17, 14, 11, 10];
+  var THRESH  = [0, 120, 280, 480, 720, 1000, 1320, 1680, 2080, 2520, 3000, 3520, 4080, 4680, 5350];
+  function xpTotal(){
+    var xp = 0;
+    Object.keys(state.days).forEach(function(k){
+      var d = state.days[k];
+      if(!d || !d.checks) return;
+      var c = 0;
+      CHECKS.forEach(function(ch){ if(d.checks[ch]) c++; });
+      xp += Math.min(c, 6) * 10;
+      if(c >= 6) xp += 25;
+      if(d.goldenHit) xp += 50;
+    });
+    xp += state.words.length * 3;
+    xp += state.gamePts || 0;
+    if(state.mission && state.mission.debrief) xp += 30;
+    return xp;
+  }
+  function shirtInfo(xp){
+    var i = 0;
+    for(var j = 0; j < THRESH.length; j++){ if(xp >= THRESH[j]) i = j; }
+    return { num: DORSALS[i], i: i, cur: THRESH[i], next: THRESH[i + 1] || null };
+  }
+  function renderGame(){
+    var xp = xpTotal(), s = shirtInfo(xp);
+    var chip = document.getElementById("dorsal");
+    chip.textContent = "Dorsal " + s.num + " · " + xp + " XP";
+    if(typeof state.lastShirt !== "number"){ state.lastShirt = s.num; lightSave(); }
+    else if(s.num < state.lastShirt){
+      state.lastShirt = s.num;
+      lightSave();
+      confetti(50);
+      toast("¡Nuevo dorsal: " + s.num + "! " + (s.num === 10 ? "EL DIEZ. 🐐" : "Sigue así."));
+      leoSay(s.num === 10 ? "El 10 es tuyo." : "¡Dorsal " + s.num + "!");
+    }
+    var numEl = document.querySelector("#leo .lg-num");
+    if(numEl) numEl.textContent = s.num;
+  }
+
+  // golden word
+  function goldenPick(){
+    var k = todayKey(), d = day();
+    if(d.goldenW) return d.goldenW;
+    var text = allEntryText();
+    var pool = state.words.filter(function(w){
+      var base = w.es.toLowerCase().replace(/^(el|la|los|las|un|una)\s+/, "");
+      var stem = base.slice(0, Math.max(4, base.length - 2));
+      return stem.length >= 4 && text.indexOf(stem) === -1;
+    });
+    if(!pool.length) pool = state.words.slice(-5);
+    if(!pool.length) return null;
+    var h = 0;
+    for(var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) % 100000;
+    d.goldenW = pool[h % pool.length].es;
+    lightSave();
+    return d.goldenW;
+  }
+  function renderGolden(){
+    var el = document.getElementById("goldenNote");
+    if(!state.words.length){ el.style.display = "none"; return; }
+    var d = day(), w = goldenPick();
+    if(!w){ el.style.display = "none"; return; }
+    el.style.display = "block";
+    el.textContent = d.goldenHit
+      ? "★ Palabra de oro conseguida: " + w + " (+50 XP). Qué mirás, bobo."
+      : "★ Palabra de oro: " + w + " · use it in tonight's journal for +50 XP";
+  }
+  function checkGolden(){
+    var d = day();
+    if(d.goldenHit || !d.goldenW) return;
+    var txt = ((d.am || "") + " " + (d.pm || "")).toLowerCase();
+    var base = d.goldenW.toLowerCase().replace(/^(el|la|los|las|un|una)\s+/, "");
+    var stem = base.slice(0, Math.max(4, base.length - 2));
+    if(txt.indexOf(stem) !== -1){
+      d.goldenHit = true;
+      confetti(30);
+      toast("★ ¡Palabra de oro! +50 XP");
+      leoCheer();
+      renderGolden(); renderGame();
+      persist();
+    }
+  }
+
+  // la liga
+  var OPPONENTS = ["Getafe", "Sevilla", "Valencia", "Athletic Club", "Atlético de Madrid", "Inter", "Bayern", "Real Madrid · EL CLÁSICO"];
+  function seasonStart(){
+    if(state.seasonStart) return state.seasonStart;
+    var keys = Object.keys(state.days).filter(isDayActive).sort();
+    if(!keys.length) return null;
+    state.seasonStart = keys[0];
+    lightSave();
+    return state.seasonStart;
+  }
+  function addDaysKey(k, n){
+    var p = k.split("-");
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    d.setDate(d.getDate() + n);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function weekResult(startK){
+    var t = todayKey(), active = 0, perfect = 0, ended = addDaysKey(startK, 6) < t;
+    for(var i = 0; i < 7; i++){
+      var k = addDaysKey(startK, i);
+      if(k > t) continue;
+      if(isDayActive(k)) active++;
+      var d = state.days[k], c = 0;
+      if(d && d.checks) CHECKS.forEach(function(ch){ if(d.checks[ch]) c++; });
+      if(c >= 6) perfect++;
+    }
+    if(!ended) return { code: "P", label: startK <= t ? "en juego" : "por jugar", pts: 0 };
+    if(active >= 5 && perfect >= 3) return { code: "W", label: "3-1", pts: 3 };
+    if(active >= 4) return { code: "D", label: "2-2", pts: 1 };
+    return { code: "L", label: "1-2", pts: 0 };
+  }
+  function renderLiga(){
+    var box = document.getElementById("ligabox");
+    var st = seasonStart();
+    if(!st){ box.innerHTML = '<p class="hint" style="padding:10px 0">The season kicks off with your first completed item.</p>'; return; }
+    var html = "", pts = 0, wins = 0;
+    for(var i = 0; i < 8; i++){
+      var r = weekResult(addDaysKey(st, i * 7));
+      pts += r.pts;
+      if(r.code === "W") wins++;
+      html += '<div class="ligarow"><span class="jn">J' + (i + 1) + '</span><span class="op">' + esc(OPPONENTS[i]) + '</span><span class="rs ' + r.code + '">' + r.label + '</span></div>';
+    }
+    html += '<div class="ligatotal">' + pts + ' puntos · ' + wins + ' victorias' + (pts >= 18 ? ' · ¡Campeona! 🏆' : '') + '</div>';
+    box.innerHTML = html;
+    if(wins === 8 && state.trofeos.indexOf("liga8") === -1){
+      leoSay("¿Qué mirás, bobo?", 4000);
+    }
+  }
+
+  // vitrina
+  var CUP = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12v2h3v3c0 2.8-2 5-4.6 5.4A6 6 0 0 1 13 16v2h3v2l1 2H7l1-2v-2h3v-2a6 6 0 0 1-3.4-3.6C5 12 3 9.8 3 7V4h3V2zm-1 4v1c0 1.6 1 3 2.4 3.5A9 9 0 0 1 7 7V6H5zm14 0h-2v1c0 1.2-.1 2.4-.4 3.5C18 10 19 8.6 19 7V6z"/></svg>';
+  function perfectWeekEver(){
+    var run = 0;
+    for(var i = 0; i < 120; i++){
+      var d = state.days[keyOffset(i)], c = 0;
+      if(d && d.checks) CHECKS.forEach(function(ch){ if(d.checks[ch]) c++; });
+      if(c >= 6){ run++; if(run >= 7) return true; } else run = 0;
+    }
+    return false;
+  }
+  function TROFEOS(){
+    var ms = state.maxStreak || 0;
+    var maxDayWords = 0, clasico = false;
+    Object.keys(state.days).forEach(function(k){
+      var n = wordsOn(k).length;
+      if(n > maxDayWords) maxDayWords = n;
+      var d = state.days[k], c = 0;
+      if(d && d.checks) CHECKS.forEach(function(ch){ if(d.checks[ch]) c++; });
+      if(d && d.match && c >= 6) clasico = true;
+    });
+    return [
+      { id: "copa3", n: "Copa Catalunya", c: "racha de 3", ok: ms >= 3 },
+      { id: "copa7", n: "Copa del Rey", c: "racha de 7", ok: ms >= 7 },
+      { id: "liga21", n: "La Liga", c: "racha de 21", ok: ms >= 21 },
+      { id: "champ45", n: "Champions", c: "racha de 45", ok: ms >= 45 },
+      { id: "sextete", n: "Semana perfecta", c: "7 días de 6/6", ok: perfectWeekEver() },
+      { id: "cien", n: "Centenaria", c: "100 palabras", ok: state.words.length >= 100 },
+      { id: "pichichi", n: "Pichichi", c: "15 palabras en un día", ok: maxDayWords >= 15 },
+      { id: "clasico", n: "El Clásico", c: "día de partido 6/6", ok: clasico }
+    ];
+  }
+  function renderVitrina(){
+    var box = document.getElementById("vitrina");
+    var list = TROFEOS(), newOnes = [];
+    box.innerHTML = list.map(function(t){
+      if(t.ok && state.trofeos.indexOf(t.id) === -1) newOnes.push(t);
+      return '<div class="trofeo ' + (t.ok ? "earned" : "locked") + '"><span style="color:' + (t.ok ? "var(--gold)" : "var(--muted)") + '">' + CUP + '</span><div class="tn">' + esc(t.n) + '</div><div class="tc">' + esc(t.c) + '</div></div>';
+    }).join("");
+    if(newOnes.length){
+      newOnes.forEach(function(t){ state.trofeos.push(t.id); });
+      lightSave();
+      confetti(50);
+      toast("🏆 ¡Trofeo: " + newOnes[0].n + "!");
+      leoCheer();
+    }
+  }
+
+  // parejas (memory pairs)
+  var pjFirst = null, pjLock = false, pjLeft = 0, pjMoves = 0;
+  function startParejas(){
+    if(state.words.length < 4) { toast("Add a few more words first"); return; }
+    var pool = shuffle(dueWords().slice()).slice(0, 8);
+    if(pool.length < 4) pool = shuffle(state.words.slice()).slice(0, 8);
+    var cards = [];
+    pool.forEach(function(w, i){
+      cards.push({ pid: i, txt: w.es });
+      cards.push({ pid: i, txt: w.en || w.es });
+    });
+    shuffle(cards);
+    pjFirst = null; pjLock = false; pjLeft = pool.length; pjMoves = 0;
+    var grid = document.getElementById("pj-grid");
+    grid.innerHTML = "";
+    cards.forEach(function(c){
+      var b = document.createElement("button");
+      b.className = "pcard";
+      b.textContent = c.txt;
+      b.dataset.pid = c.pid;
+      b.addEventListener("click", function(){ pjFlip(b); });
+      grid.appendChild(b);
+    });
+    document.getElementById("pj-meta").textContent = "Encuentra las parejas";
+    document.getElementById("parejas").classList.add("active");
+  }
+  function pjFlip(b){
+    if(pjLock || b.classList.contains("flip") || b.classList.contains("won")) return;
+    b.classList.add("flip");
+    if(!pjFirst){ pjFirst = b; return; }
+    pjMoves++;
+    var a = pjFirst; pjFirst = null;
+    if(a.dataset.pid === b.dataset.pid){
+      a.classList.add("won"); b.classList.add("won");
+      pjLeft--;
+      if(pjLeft === 0){
+        var k = todayKey();
+        document.getElementById("pj-meta").textContent = "¡Completado en " + pjMoves + " intentos!";
+        confetti(35);
+        if(!day().parejas){
+          day().parejas = true;
+          state.gamePts += 15;
+          toast("Parejas: +15 XP");
+          persist();
+        }
+        renderGame();
+      }
+    } else {
+      pjLock = true;
+      setTimeout(function(){ a.classList.remove("flip"); b.classList.remove("flip"); pjLock = false; }, 750);
+    }
+  }
+  document.getElementById("parejasbtn").addEventListener("click", startParejas);
+  document.getElementById("pj-close").addEventListener("click", function(){ document.getElementById("parejas").classList.remove("active"); });
+
+  // rompecabezas (sentence unscramble from Eco)
+  var rompeTarget = [], rompeBuilt = [];
+  function startRompe(){
+    if(!state.cache.eco || state.cache.eco.date !== todayKey()){ toast('First tap "Frases de hoy"'); return; }
+    var s = state.cache.eco.items[ecoIdx] || state.cache.eco.items[0];
+    rompeTarget = s.replace(/[.!?¡¿,]/g, "").split(/\s+/).filter(Boolean);
+    rompeBuilt = [];
+    var chips = document.getElementById("rompe-chips");
+    chips.innerHTML = "";
+    shuffle(rompeTarget.slice()).forEach(function(w){
+      var b = document.createElement("button");
+      b.className = "chip addw";
+      b.textContent = w;
+      b.addEventListener("click", function(){
+        if(b.disabled) return;
+        b.disabled = true; b.style.opacity = .35;
+        rompeBuilt.push(w);
+        document.getElementById("rompe-answer").textContent = rompeBuilt.join(" ");
+        if(rompeBuilt.length === rompeTarget.length){
+          if(rompeBuilt.join(" ").toLowerCase() === rompeTarget.join(" ").toLowerCase()){
+            document.getElementById("rompe-status").textContent = "¡Perfecto! +5 XP · speak it out loud now";
+            state.gamePts += 5;
+            confetti(20); leoCheer(); persist(); renderGame();
+          } else {
+            document.getElementById("rompe-status").textContent = "Not quite: " + rompeTarget.join(" ");
+          }
+        }
+      });
+      chips.appendChild(b);
+    });
+    document.getElementById("rompe-answer").textContent = "";
+    document.getElementById("rompe-status").textContent = "Tap the words in order";
+    document.getElementById("rompe").style.display = "block";
+  }
+  document.getElementById("rompebtn").addEventListener("click", startRompe);
+
   // ---------- welcome tour ----------
   var TOUR = [
     { t: "Hola, Alisha 🍊",
@@ -1860,9 +2444,11 @@
     { t: "Claude is your teacher inside the app",
       d: "<p>Every <b>Corrección</b> teaches the app what you find hard — so <b>Prompt de hoy</b> (in the conversation card) writes you a fresh ChatGPT prompt each day built around <i>your</i> mistakes and <i>your</i> new words.</p><p><b>Sugerencias</b> suggests words to tap-and-add, and <b>La foto de hoy</b> is magic: photo anything — the market, your fridge — and get the Spanish words for what's in it.</p>" },
     { t: "Charla y Palabras",
-      d: "<p><b>Charla</b> is a text chat in easy Spanish — perfect for the metro. Claude corrects you gently in brackets and keeps chatting. A fresh conversation every day.</p><p>In <b>Palabras</b>, the <b>Repasar</b> button quizzes you exactly when your memory needs it (1, 3, 7, 21 days). Just answer honestly: <i>la sabía</i> or <i>aún no</i>.</p>" },
+      d: "<p><b>Charla</b> is a text chat with Leo himself — easy Spanish, gentle corrections in brackets, and he always wants to talk about the match. Fresh conversation every day, perfect for the metro. Your voice conversations are with Leo too: the prompt sets it up.</p><p>In <b>Palabras</b>, <b>Penaltis</b> quizzes you exactly when your memory needs it (1, 3, 7, 21 days). Be honest: <i>la sabía</i> or <i>aún no</i>.</p>" },
     { t: "Plan: your roadmap",
       d: "<p>The <b>Plan</b> tab is your colour-coded 8-week route. Open your week, tick its tasks, and press <b>Estoy aquí</b> so the app knows where you are.</p><p>Every Sunday: light day. Review your words, then tap <b>Generar repaso</b> — Claude reads your whole week and tells you what improved, what to fix, and whether to move on. There's also your weekly real-life <b>misión</b> (bravas count as homework) and a <b>backup</b> button — use it weekly!</p>" },
+    { t: "It's a game. Win it. ⚽",
+      d: "<p>Your day is a match: every ticked item moves the clock 15 minutes, and 6 of 6 is the <b>full-time whistle</b> (with confetti). Leo up top reacts to everything — and his shirt shows <b>your dorsal</b>: you start as number 99 and every bit of Spanish earns XP toward the <b>number 10</b>.</p><p>Word review is a <b>penalty shootout</b>. Each morning has a <b>golden word</b> worth +50 XP if you use it in the evening journal. And in the Plan tab: your 8-week <b>Liga</b> (week 8 is El Clásico) and <b>la vitrina</b> — trophies for streaks and records.</p>" },
     { t: "The rules 🔥",
       d: "<p>1. Miss a day? Nothing happens. Tomorrow continues. (And every 7-day streak earns a ❄ freeze that protects it automatically.)</p><p>2. If a week feels big, repeat it. Order beats speed.</p><p>3. <b>Mistakes are the plan.</b> Every corrected mistake is a sentence that's now yours. Nobody in Spain speaks perfect Spanish either.</p><p>Empieza con un párrafo. ¡Poco a poco!</p>" }
   ];
@@ -1904,6 +2490,8 @@
     renderCharla();
     renderMission();
     renderBackupInfo();
+    renderLiga();
+    renderVitrina();
     renderHeader();
     var seen = false;
     try { seen = localStorage.getItem("pap-tour-done") === "1"; } catch(e){}
